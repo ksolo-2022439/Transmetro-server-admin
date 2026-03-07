@@ -50,7 +50,7 @@ const initServer = async () => {
         app.get(`${BASE_URL}/health`, (req, res) => {
             res.status(200).json({
                 status: 'ok',
-                service: 'BIK Admin',
+                service: 'TRANSMETRO-CONECTA Admin',
                 version: '1.0.0'
             });
         });
