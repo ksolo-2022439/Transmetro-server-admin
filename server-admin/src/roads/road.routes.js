@@ -7,6 +7,7 @@ import {
     updateRoad, 
     changeRoadStatus 
 } from './road.controller.js';
+import { validatePagination, validateRoadFilters } from "../../middlewares/data-validators.js";
 // import { validateJWT } from '../../middlewares/validate-jwt.js';
 
 import {
@@ -19,8 +20,8 @@ import {
 const router = Router();
 
 // GET
-router.get('/', getRoads);
-router.get('/all', getAllRoads); 
+router.get('/', validatePagination, validateRoadFilters, getRoads);
+router.get('/all', validateRoadFilters, getAllRoads); 
 router.get('/:id', validateGetRoadById, getRoadById);
 
 // POST

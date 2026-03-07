@@ -7,6 +7,7 @@ import {
     updateStation, 
     changeStationStatus 
 } from './station.controller.js';
+import { validatePagination, validateStationFilters } from "../../middlewares/data-validators.js";
 // import { validateJWT } from '../../middlewares/validate-jwt.js';
 
 import {
@@ -19,8 +20,8 @@ import {
 const router = Router();
 
 // GET
-router.get('/', getStations);
-router.get('/all', getAllStations); 
+router.get('/', validatePagination, validateStationFilters, getStations);
+router.get('/all', validateStationFilters, getAllStations); 
 router.get('/:id', validateGetStationById, getStationById);
 
 // POST
