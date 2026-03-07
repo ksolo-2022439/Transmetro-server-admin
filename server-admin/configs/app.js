@@ -12,6 +12,8 @@ import { createAdminSeed } from './admin.seed.js'
 
 //Rutas
 //EJEMPLO: import accountRoutes from '../src/accounts/account.routes.js';
+import roadRoutes from '../src/roads/road.routes.js';
+import stationRoutes from '../src/stations/station.routes.js';
 
 const BASE_URL = '/TRANSMETRO-CONECTA/v1';
 
@@ -27,6 +29,8 @@ const middlewares = (app) => {
 //Integracion de todas las rutas
 const routes = (app) => {
     //EJEMPLO: app.use(`${BASE_URL}/accounts`, accountRoutes);
+    app.use(`${BASE_URL}/roads`, roadRoutes);
+    app.use(`${BASE_URL}/stations`, stationRoutes);
 }
 
 //FUNCIÓN PARA INICIAR EL SERVIDOR

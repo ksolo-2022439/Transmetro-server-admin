@@ -197,7 +197,7 @@ export const changeRoadStatus = async (req, res) => {
         const { id } = req.params;
         const { status } = req.body; 
 
-        if (!['ACTIVE', 'INACTIVE', 'SUSPENDED'].includes(status.toUpperCase())) {
+        if (!['ACTIVE', 'INACTIVE', 'MAINTENANCE', 'CLOSED'].includes(status.toUpperCase())) {
             return res.status(400).json({
                 success: false,
                 message: 'Estado inválido proporcionado'
