@@ -8,7 +8,6 @@ import helmet from 'helmet';
 import { corsOptions } from './cors-configuration.js';
 import { helmetConfiguration } from './helmet-configuration.js';
 import { dbConnection } from './db.js'; 
-import { createAdminSeed } from './admin.seed.js'
 
 //Rutas
 //EJEMPLO: import accountRoutes from '../src/accounts/account.routes.js';
@@ -46,8 +45,6 @@ const initServer = async () => {
         //CONFIGURACIONES DEL MIDDLEWARES Y RUTAS
         middlewares(app);
         routes(app);
-        createAdminSeed(app);
-
         app.listen(PORT, () => {
             console.log(`Servidor corriendo en el puerto ${PORT}`);
             console.log(`Base URL: http://localhost:${PORT}${BASE_URL}`);

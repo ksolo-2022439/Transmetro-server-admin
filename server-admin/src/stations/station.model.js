@@ -35,6 +35,7 @@ const stationSchema = new mongoose.Schema(
                 type: String,
                 enum: ['Point'], 
                 required: true,
+                unique: true,
                 default: 'Point'
             },
             coordinates: {

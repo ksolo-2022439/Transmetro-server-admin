@@ -25,11 +25,8 @@ export const getRoads = async (req, res) => {
         res.status(200).json({
             success: true,
             data: roads,
-            pagination: {
-                currentPage: parseInt(page),
-                totalPages: Math.ceil(total / limit),
-                totalRecords: total,
-                limit: parseInt(limit)
+            summary: {
+                totalRoads: total
             }
         });
     } catch (error) {

@@ -1,7 +1,6 @@
 "use strict";
  
 import mongoose from "mongoose";
-import { createAdminSeed } from "./admin.seed.js";
  
 export const dbConnection = async () => {
   try {
