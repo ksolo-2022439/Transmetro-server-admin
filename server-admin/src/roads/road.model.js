@@ -21,7 +21,7 @@ const roadSchema = new mongoose.Schema(
         typeRoad: {
             type: String,
             required: true,
-            enum: ['CENTRALES', 'CARRIL LATERAL', 'TRASBORDO', 'TERMINALES'],
+            enum: ['EXPRESS', 'RELEVOS', 'CENTRALES'],
             default: 'CENTRALES'
         },
         status: {

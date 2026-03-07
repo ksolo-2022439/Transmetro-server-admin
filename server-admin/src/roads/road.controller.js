@@ -2,6 +2,24 @@
 
 import mongoose from 'mongoose';
 import Road from './road.model.js';
+import Station from '../stations/station.model.js'; 
+
+const processStations = async (stationsArray) => {
+    if (!stationsArray || !Array.isArray(stationsArray) || stationsArray.length === 0) return [];
+    
+    const processedIds = [];
+    for (const item of stationsArray) {
+        if (mongoose.Types.ObjectId.isValid(item)) {
+            processedIds.push(item); // Ya es un ID válido
+        } else {
+            const station = await Station.findOne({ stationCode: item.toUpperCase() });
+            if (station) {
+                processedIds.push(station._id.toString());
+            }
+        }
+    }
+    return processedIds;
+};
 
 // 1. Obtener todas las rutas 
 export const getRoads = async (req, res) => {
@@ -15,7 +33,7 @@ export const getRoads = async (req, res) => {
         const skip = (parseInt(page) - 1) * parseInt(limit);
 
         const roads = await Road.find(filter)
-            .populate('stations', 'name stationCode typeStation location') // Trae la info de las estaciones asociadas
+            .populate('stations', 'name stationCode typeStation location') 
             .limit(parseInt(limit))
             .skip(skip)
             .sort({ createdAt: -1 });
@@ -56,7 +74,9 @@ export const getAllRoads = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Rutas obtenidas exitosamente',
-            totalRecords: total,
+            summary: {
+                totalRoads: total
+            },
             data: roads
         });
     } catch (error) {
@@ -105,12 +125,13 @@ export const getRoadById = async (req, res) => {
 export const createRoad = async (req, res) => {
     try {
         const { name, routeCode, typeRoad, stations, coordinates } = req.body;
+        const finalStations = await processStations(stations);
 
         const roadData = {
             name,
             routeCode,
             typeRoad,
-            stations: stations || [],
+            stations: finalStations,
             path: {
                 type: 'LineString',
                 coordinates: coordinates
@@ -146,7 +167,7 @@ export const createRoad = async (req, res) => {
 export const updateRoad = async (req, res) => {
     try {
         const { id } = req.params;
-        const { coordinates, ...otherData } = req.body;
+        const { coordinates, stations, ...otherData } = req.body;
         
         const updateData = { ...otherData };
         
@@ -155,6 +176,10 @@ export const updateRoad = async (req, res) => {
                 type: 'LineString',
                 coordinates: coordinates
             };
+        }
+
+        if (stations !== undefined) {
+            updateData.stations = await processStations(stations);
         }
 
         let query = { _id: id };
