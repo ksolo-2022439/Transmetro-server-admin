@@ -8,7 +8,7 @@
 //         // Agregar SECRET_KEY=A_SUPER_SECRET_KEY_FOR_TRANSMETRO_CONECTA_12345 en .env
 //         jwt.sign(
 //             payload,
-//             process.env.SECRET_KEY || 'A_SUPER_SECRET_KEY_FOR_TRANSMETRO_CONECTA_12345_Backup',
+//             process.env.JWT_SECRET || 'A_SUPER_SECRET_KEY_FOR_TRANSMETRO_CONECTA_12345_Backup',
 //             { expiresIn: '4h' }, // token expira en 4 horas
 //             (err, token) => {
 //                 if (err) {

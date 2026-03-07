@@ -8,7 +8,6 @@ import {
     changeStationStatus 
 } from './station.controller.js';
 import { validatePagination, validateStationFilters } from "../../middlewares/data-validators.js";
-// import { validateJWT } from '../../middlewares/validate-jwt.js';
 
 import {
     validateCreateStation, 
@@ -16,19 +15,51 @@ import {
     validateGetStationById,
     validateStationStatusChange
 } from "../../middlewares/stations-validators.js";
+import { validateJWT } from "../../middlewares/auth-validators.js";
 
 const router = Router();
 
 // GET
-router.get('/', validatePagination, validateStationFilters, getStations);
-router.get('/all', validateStationFilters, getAllStations); 
-router.get('/:id', validateGetStationById, getStationById);
+
+// Listar con paginación y filtros
+router.get('/', [
+    validateJWT,
+    validatePagination,
+    validateStationFilters
+], getStations);
+
+// Listar sin paginación, para dropdowns o listados completos)
+router.get('/all', [
+    validateJWT,
+    validateStationFilters
+], getAllStations); 
+
+// Obtener por ID
+router.get('/:id', [
+    validateJWT,
+    validateGetStationById
+], getStationById);
 
 // POST
-router.post('/', validateCreateStation, createStation);  
+
+// Crear nueva estación
+router.post('/', [
+    validateJWT,
+    validateCreateStation
+], createStation);
 
 // PUT 
-router.put('/:id', validateUpdateStation, updateStation);
-router.put('/:id/status', validateStationStatusChange, changeStationStatus);
+
+// Actualizar estación existente
+router.put('/:id', [
+    validateJWT,
+    validateUpdateStation
+], updateStation);
+
+// Cambiar estado de la estación (activar/desactivar)
+router.put('/:id/status', [
+    validateJWT,
+    validateStationStatusChange
+], changeStationStatus);
 
 export default router;
