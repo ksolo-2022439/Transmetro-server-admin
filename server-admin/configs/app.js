@@ -4,7 +4,9 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import helmet from 'helmet';
 import { corsOptions } from './cors-configuration.js';
+import { helmetConfiguration } from './helmet-configuration.js';
 import { dbConnection } from './db.js'; 
 import { createAdminSeed } from './admin.seed.js'
 
@@ -17,6 +19,7 @@ const BASE_URL = '/TRANSMETRO-CONECTA/v1';
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false, limit: '10mb' }));
     app.use(express.json({ limit: '10mb' }));
+    app.use(helmet(helmetConfiguration));
     app.use(cors(corsOptions));
     app.use(morgan('dev'));
 }
