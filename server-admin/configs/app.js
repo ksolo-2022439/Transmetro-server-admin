@@ -13,6 +13,7 @@ import { dbConnection } from './db.js';
 //EJEMPLO: import accountRoutes from '../src/accounts/account.routes.js';
 import roadRoutes from '../src/roads/road.routes.js';
 import stationRoutes from '../src/stations/station.routes.js';
+import alertRoutes from '../src/alerts/alert.routes.js';
 
 const BASE_URL = '/TRANSMETRO-CONECTA/v1';
 
@@ -30,6 +31,7 @@ const routes = (app) => {
     //EJEMPLO: app.use(`${BASE_URL}/accounts`, accountRoutes);
     app.use(`${BASE_URL}/roads`, roadRoutes);
     app.use(`${BASE_URL}/stations`, stationRoutes);
+    app.use(`${BASE_URL}/alerts`, alertRoutes);
 }
 
 //FUNCIÓN PARA INICIAR EL SERVIDOR
