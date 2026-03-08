@@ -32,7 +32,7 @@ http://localhost:3001
 
 ## Uso de la Colección de Postman
 
-Las pruebas del API se realizan mediante una colección de Postman. XDD
+Las pruebas del API se realizan mediante una colección de Postman.
 
 ### Pasos
 
