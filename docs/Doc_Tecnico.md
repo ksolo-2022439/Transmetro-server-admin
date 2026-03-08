@@ -59,7 +59,7 @@ Crear el archivo `.env` en la raíz del proyecto para definir los puertos y cone
 
 ```env
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/TransmetroAdminDb
+URI_MONGODB=mongodb://localhost:27017/TransmetroAdminDb
 JWT_SECRET=A_SUPER_SECRET_KEY_FOR_TRANSMETRO_CONECTA_12345
 ```
 

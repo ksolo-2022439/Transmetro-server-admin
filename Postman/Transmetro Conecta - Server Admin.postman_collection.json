@@ -1,20 +1,48 @@
 {
   "info": {
-    "_postman_id": "2bc726f9-3ef0-47aa-b6aa-bbe361a98b97",
-    "name": "TRANSMETRO-CONECTA (SERVER-ADMIN)",
+    "_postman_id": "b91e1422-ad61-4b04-921e-3e05ceb2019f",
+    "name": "Transmetro Conecta - Server Admin",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "48297207",
-    "_collection_link": "https://go.postman.co/collection/48297207-2bc726f9-3ef0-47aa-b6aa-bbe361a98b97?source=collection_link"
+    "_exporter_id": "48421810",
+    "_collection_link": "https://go.postman.co/collection/48421810-b91e1422-ad61-4b04-921e-3e05ceb2019f?source=collection_link"
   },
   "item": [
     {
-      "name": "Roads (Falta JWT)",
+      "name": "General",
+      "item": [
+        {
+          "name": "Health check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Roads",
       "item": [
         {
           "name": "Crear una Estación",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n  \"name\": \"Estación Plaza La Reforma\",\r\n  \"stationCode\": \"EST-03\",\r\n  \"typeStation\": \"CENTRALES\",\r\n  \"coordinates\": [-90.532818, 14.734915]\r\n}",
@@ -25,15 +53,11 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/stations",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/stations",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
                 "stations"
               ]
             }
@@ -44,7 +68,13 @@
           "name": "Actualizar una Estación",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n  \"name\": \"Estación Plaza El Amate (Remodelada)\",\r\n  \"typeStation\": \"TRASBORDO\",\r\n  \"coordinates\": [-90.533000, 14.635000]\r\n}",
@@ -55,17 +85,13 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/stations/EST-01",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/stations/{{stationCode}}",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
                 "stations",
-                "EST-01"
+                "{{stationCode}}"
               ]
             }
           },
@@ -75,7 +101,13 @@
           "name": "Cambiar Estado de la Estación",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n  \"status\": \"MAINTENANCE\"\r\n}",
@@ -86,17 +118,13 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/stations/EST-01/status",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/stations/{{stationCode}}/status",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
                 "stations",
-                "EST-01",
+                "{{stationCode}}",
                 "status"
               ]
             }
@@ -107,17 +135,19 @@
           "name": "Listar todas las Estaciones",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/stations",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/stations",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
                 "stations"
               ]
             }
@@ -127,13 +157,19 @@
       ]
     },
     {
-      "name": "Stations (Falta JWT)",
+      "name": "Stations",
       "item": [
         {
           "name": "Crear una Ruta",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n  \"name\": \"Línea 13 Centro Cívico PARTE 2 - Centra Sur\",\r\n  \"routeCode\": \"L13\",\r\n  \"typeRoad\": \"CENTRALES\",\r\n  \"stations\": [\r\n    \"EST-01\",\r\n    \"EST-02\",\r\n    \"EST-03\"\r\n    ], \r\n  \"coordinates\": [\r\n    [-90.5132, 14.6285],\r\n    [-90.5180, 14.6200],\r\n    [-90.5250, 14.6105]\r\n  ]\r\n}",
@@ -144,16 +180,13 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/roads",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/roads/",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
-                "roads"
+                "roads",
+                ""
               ]
             }
           },
@@ -163,7 +196,13 @@
           "name": "Actualizar una Ruta",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n  \"name\": \"Línea 13 (Express Plus)\",\r\n  \"typeRoad\": \"CENTRALES\",\r\n  \"stations\": [\"EST-01\", \"EST-03\"]\r\n}",
@@ -174,17 +213,13 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/roads/L13",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/roads/{{routeCode}}",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
                 "roads",
-                "L13"
+                "{{routeCode}}"
               ]
             }
           },
@@ -194,10 +229,16 @@
           "name": "Cambiar Estado de la Ruta",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"status\": \"CLOSED\"\r\n}",
+              "raw": "{\r\n  \"status\": \"ACTIVE\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -205,17 +246,13 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/roads/L12/status",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/roads/{{routeCode}}/status",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
                 "roads",
-                "L12",
+                "{{routeCode}}",
                 "status"
               ]
             }
@@ -229,29 +266,48 @@
           },
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"status\": \"CLOSED\"\r\n}"
+              "raw": ""
             },
             "url": {
-              "raw": "http://localhost:3000/TRANSMETRO-CONECTA/v1/roads/69ab92bf17eb41607cdc1d9e",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/roads/all",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3000",
               "path": [
-                "TRANSMETRO-CONECTA",
-                "v1",
                 "roads",
-                "69ab92bf17eb41607cdc1d9e"
+                "all"
               ]
             }
           },
           "response": []
         }
       ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "stationCode",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "routeCode",
+      "value": "",
+      "type": "default"
     }
   ]
 }

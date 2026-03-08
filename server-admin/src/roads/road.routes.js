@@ -15,7 +15,7 @@ import {
     validateGetRoadById,
     validateRoadStatusChange
 } from "../../middlewares/roads-validators.js";
-import { validateJWT } from "../../middlewares/auth-validator.js";
+import { validateJWT } from "../../middlewares/auth-validators.js";
 
 const router = Router();
 
