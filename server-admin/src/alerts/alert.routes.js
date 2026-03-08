@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { createAlert, getActiveAlerts, resolveAlert } from './alert.controller.js';
 import { createAlertValidator, updateAlertStatusValidator } from '../../middlewares/alerts-validators.js';
-import { validateJWT } from '../../middlewares/validate-jwt.js';
+import { validateJWT } from '../../middlewares/auth-validators.js';
 
 const router = Router();
 
