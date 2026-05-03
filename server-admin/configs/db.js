@@ -21,7 +21,7 @@ export const dbConnection = async () => {
     });
  
     mongoose.connection.on("open", () => {
-      console.log("MongoDB | conectado a la base de datos TRANSMETRO-CONECTA");
+      console.log("MongoDB | conectado a la base de datos Tconecta");
     });
  
     mongoose.connection.on("reconnected", () => {
@@ -36,7 +36,7 @@ export const dbConnection = async () => {
     //                   CONEXION
     // ----------------------------------------------
  
-    await mongoose.connect(process.env.URI_MONGODB, {
+    await mongoose.connect(process.env.MONGODB_URI, {
       serverSelectionTimeoutMS: 5000,
       maxPoolSize: 10,
     });

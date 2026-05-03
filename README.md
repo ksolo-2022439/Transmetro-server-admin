@@ -1,6 +1,6 @@
-# Transmetro Conecta - Server Admin
+# Tconecta - Server Admin
 
-Microservicio principal que actúa como panel administrativo para Transmetro Conecta. Desarrollado con Node.js y Express, gestiona la administración de estaciones, rutas, alertas operativas y orquesta las peticiones principales del sistema de transporte.
+Microservicio principal que actúa como panel administrativo para Tconecta. Desarrollado con Node.js y Express, gestiona la administración de estaciones, rutas, alertas operativas y orquesta las peticiones principales del sistema de transporte.
 
 ## Configuración de Entorno (.env)
 
@@ -30,7 +30,36 @@ http://localhost:3001
 
 ---
 
-## Uso de la Colección de Postman
+## Documentación Swagger/OpenAPI
+
+Se ha implementado documentación automática e interactiva de todos los endpoints mediante **Swagger UI**.
+
+### Acceso a la Documentación
+
+Una vez que el servidor esté en ejecución, accede a:
+
+```
+http://localhost:3001/api-docs
+```
+
+### Características de Swagger
+
+- ✅ Documentación automática de todos los endpoints
+- ✅ Interfaz interactiva para probar endpoints en tiempo real
+- ✅ Especificación OpenAPI 3.0 completa
+- ✅ Soporte para autenticación JWT Bearer Token
+- ✅ Esquemas de datos documentados
+- ✅ Ejemplos de parámetros y respuestas
+
+### Endpoints Disponibles en Swagger
+
+- **Health Check**: Verificar estado del servidor
+- **Roads**: Gestión de rutas (listar, crear, actualizar, cambiar estado)
+- **Stations**: Gestión de estaciones (listar, crear, actualizar, cambiar estado)
+- **Alerts**: Gestión de alertas (listar, crear, resolver)
+
+
+---
 
 Las pruebas del API se realizan mediante una colección de Postman.
 
@@ -41,7 +70,7 @@ Las pruebas del API se realizan mediante una colección de Postman.
 3. Verifica que la base de las rutas esté apuntando a:
 
 ```
-http://localhost:3001/TRANSMETRO-CONECTA/v1
+http://localhost:3001/TCONECTA/v1
 ```
 
 4. Ejecuta el endpoint:
