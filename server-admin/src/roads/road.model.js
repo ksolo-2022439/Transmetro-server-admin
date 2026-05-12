@@ -47,7 +47,7 @@ const roadSchema = new mongoose.Schema(
                 type: [[Number]],
                 required: [true, 'Las coordenadas de la ruta son obligatorias'],
                 validate: {
-                    validator: function(coordinates) {
+                    validator: function (coordinates) {
                         return coordinates && coordinates.length >= 2;
                     },
                     message: 'Una ruta debe tener al menos 2 puntos (inicio y fin)'
@@ -61,6 +61,11 @@ const roadSchema = new mongoose.Schema(
         isActive: {
             type: Boolean,
             default: true
+        },
+        serviceType: {
+            type: String,
+            required: [true, 'El tipo de servicio es obligatorio'],
+            enum: ['TRANSMETRO', 'TRANSURBANO', 'TUBUS']
         }
     },
     {

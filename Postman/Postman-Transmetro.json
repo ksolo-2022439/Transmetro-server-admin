@@ -1,988 +1,704 @@
 {
   "info": {
-    "_postman_id": "ba5cb105-a91e-4e05-a8c4-33e06d150a43",
-    "name": "Transmetro Conecta - Ecosistema Completo",
-    "description": "Colección maestra con variables de entorno automatizadas para orquestar Auth-Server, Server-Admin y Server-Client.",
+    "name": "Transmetro Admin API",
+    "description": "Colección de API para el servidor admin de Transmetro Conecta",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "52435973",
-    "_collection_link": "https://go.postman.co/collection/52435973-ba5cb105-a91e-4e05-a8c4-33e06d150a43?source=collection_link"
+    "version": "1.0.0",
+    "_postman_id": "transmetro-admin-api-2026"
   },
   "item": [
     {
-      "name": "1. Auth Server (.NET 8)",
+      "name": "Health Check",
       "item": [
         {
-          "name": "Autenticación e Identidad",
-          "item": [
-            {
-              "name": "Registrar Usuario",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "if (pm.response.code === 200) {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.collectionVariables.set(\"jwt_token\", jsonData.token);",
-                      "    pm.collectionVariables.set(\"user_id\", jsonData.userId);",
-                      "}"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
               ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"CUI\": \"1234567890123\",\n  \"Email\": \"usuario@ejemplo.com\",\n  \"Password\": \"MiPasswordSeguro123\"\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/auth/register",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "auth",
-                    "register"
-                  ]
-                }
-              },
-              "response": []
+              "path": [
+                "health"
+              ]
             },
-            {
-              "name": "Registrar Administrador (Protegido)",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{jwt_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"CUI\": \"9876543210123\",\n  \"Email\": \"nuevo.admin@transmetro.com\",\n  \"Password\": \"AdminSeguro2026!\"\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/auth/register-admin",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "auth",
-                    "register-admin"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Iniciar Sesión",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "if (pm.response.code === 200) {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.collectionVariables.set(\"jwt_token\", jsonData.token);",
-                      "    pm.collectionVariables.set(\"user_id\", jsonData.userId);",
-                      "}"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"CUI\": \"1234567890123\",\n  \"Password\": \"MiPasswordSeguro123\"\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/auth/login",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "auth",
-                    "login"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Iniciar Sesión (ADMIN)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "if (pm.response.code === 200) {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.collectionVariables.set(\"jwt_token\", jsonData.token);",
-                      "    pm.collectionVariables.set(\"user_id\", jsonData.userId);",
-                      "}"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"CUI\": \"0000000000000\",\n  \"Password\": \"AdminTransmetro2026!\"\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/auth/login",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "auth",
-                    "login"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Solicitar Recuperación",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "if (pm.response.code === 200) {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.collectionVariables.set(\"recovery_token\", jsonData.token);",
-                      "}"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"Email\": \"usuario@ejemplo.com\"\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/auth/recover-password",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "auth",
-                    "recover-password"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Restablecer Contraseña",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"Email\": \"usuario@ejemplo.com\",\n  \"Token\": \"{{recovery_token}}\",\n  \"NewPassword\": \"NuevaPass12345\"\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/auth/reset-password",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "auth",
-                    "reset-password"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Listar Todos los Usuarios (Admin)",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{jwt_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/auth/users",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "auth",
-                    "users"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Transacciones",
-          "item": [
-            {
-              "name": "Comprar Tarjeta Ciudadana (Q20.00)",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{jwt_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"CardNumber\": \"4111 1111 1111 1111\",\n  \"ExpirationDate\": \"12/28\",\n  \"CVV\": \"123\",\n  \"Amount\": 20.00\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/transaction/purchase-card",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "transaction",
-                    "purchase-card"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Recargar Saldo",
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{jwt_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"CardNumber\": \"4111 1111 1111 1111\",\n  \"ExpirationDate\": \"12/28\",\n  \"CVV\": \"123\",\n  \"Amount\": 50.00\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAuth}}/api/transaction/recharge",
-                  "host": [
-                    "{{baseUrlAuth}}"
-                  ],
-                  "path": [
-                    "api",
-                    "transaction",
-                    "recharge"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
+            "description": "Verifica el estado del servidor"
+          },
+          "response": []
         }
-      ],
-      "description": "Microservicio de Identidad y Transacciones."
+      ]
     },
     {
-      "name": "2. Server Admin (Node.js)",
+      "name": "Roads (Rutas)",
       "item": [
         {
-          "name": "General",
-          "item": [
-            {
-              "name": "Health check",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/health",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "health"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Estaciones",
-          "item": [
-            {
-              "name": "Crear una Estación",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Estación Plaza La Reforma\",\r\n  \"stationCode\": \"EST-03\",\r\n  \"typeStation\": \"CENTRALES\",\r\n  \"coordinates\": [-90.532818, 14.734915]\r\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/stations",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "stations"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Actualizar una Estación",
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Estación Plaza El Amate (Remodelada)\",\r\n  \"typeStation\": \"TRASBORDO\",\r\n  \"coordinates\": [-90.533000, 14.635000]\r\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/stations/{{stationCode}}",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "stations",
-                    "{{stationCode}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Cambiar Estado de la Estación",
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"status\": \"MAINTENANCE\"\r\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/stations/{{stationCode}}/status",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "stations",
-                    "{{stationCode}}",
-                    "status"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Listar todas las Estaciones",
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/stations",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "stations"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "Alertas Operativas",
-          "item": [
-            {
-              "name": "Crear Alerta",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"Manifestación en Zona 1\",\n  \"description\": \"Retrasos considerables en la Línea 1 debido a bloqueos cerca del Centro Cívico.\",\n  \"typeAlert\": \"INCIDENT\"\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/alerts",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "alerts"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Listar Alertas Activas",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "if (pm.response.code === 200) {",
-                      "    var jsonData = pm.response.json();",
-                      "    if (jsonData.data && jsonData.data.length > 0) {",
-                      "        pm.collectionVariables.set(\"alert_id\", jsonData.data[0]._id);",
-                      "    }",
-                      "}"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
+          "name": "Get All Roads with Pagination",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/roads?page=1&limit=10&status=ACTIVO&typeRoad=PRINCIPAL",
+              "host": [
+                "{{baseUrl}}"
               ],
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/alerts",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "alerts"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Resolver Alerta",
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"status\": \"RESOLVED\"\n}"
+              "path": [
+                "roads"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número de página (default: 1)"
                 },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/alerts/{{alert_id}}/status",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "alerts",
-                    "{{alert_id}}",
-                    "status"
-                  ]
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Cantidad de registros por página (default: 10)"
+                },
+                {
+                  "key": "status",
+                  "value": "ACTIVO",
+                  "description": "Filtrar por estado: ACTIVO, INACTIVO",
+                  "disabled": true
+                },
+                {
+                  "key": "typeRoad",
+                  "value": "PRINCIPAL",
+                  "description": "Filtrar por tipo: PRINCIPAL, SECUNDARIA, AUXILIAR",
+                  "disabled": true
                 }
-              },
-              "response": []
-            }
-          ]
+              ]
+            },
+            "description": "Obtiene todas las rutas con paginación e filtros opcionales"
+          },
+          "response": []
         },
         {
-          "name": "Rutas",
-          "item": [
-            {
-              "name": "Crear una Ruta",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Línea 13 Centro Cívico PARTE 2 - Centra Sur\",\r\n  \"routeCode\": \"L13\",\r\n  \"typeRoad\": \"CENTRALES\",\r\n  \"stations\": [\r\n    \"EST-01\",\r\n    \"EST-02\",\r\n    \"EST-03\"\r\n    ], \r\n  \"coordinates\": [\r\n    [-90.5132, 14.6285],\r\n    [-90.5180, 14.6200],\r\n    [-90.5250, 14.6105]\r\n  ]\r\n}"
+          "name": "Get All Roads (No Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/roads/all?status=ACTIVO&typeRoad=PRINCIPAL",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roads",
+                "all"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "ACTIVO",
+                  "disabled": true
                 },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/roads/",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "roads",
-                    ""
-                  ]
+                {
+                  "key": "typeRoad",
+                  "value": "PRINCIPAL",
+                  "disabled": true
                 }
-              },
-              "response": []
+              ]
             },
-            {
-              "name": "Actualizar una Ruta",
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"name\": \"Línea 13 (Express Plus)\",\r\n  \"typeRoad\": \"CENTRALES\",\r\n  \"stations\": [\"EST-01\", \"EST-03\"]\r\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/roads/{{routeCode}}",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "roads",
-                    "{{routeCode}}"
-                  ]
-                }
-              },
-              "response": []
+            "description": "Obtiene todas las rutas sin paginación (útil para dropdowns)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Road by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/roads/66a1234567890abcdef12345",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roads",
+                "66a1234567890abcdef12345"
+              ]
             },
-            {
-              "name": "Cambiar Estado de la Ruta",
-              "request": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"status\": \"ACTIVE\"\r\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/roads/{{routeCode}}/status",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "roads",
-                    "{{routeCode}}",
-                    "status"
-                  ]
-                }
+            "description": "Obtiene una ruta específica por su ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Road",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
               },
-              "response": []
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Carrera 7\",\n  \"code\": \"CR7\",\n  \"typeRoad\": \"PRINCIPAL\",\n  \"description\": \"Ruta principal del norte al sur\",\n  \"stations\": [\"66a1234567890abcdef12345\", \"66a1234567890abcdef12346\"]\n}"
             },
-            {
-              "name": "Listar todas las Rutas",
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrlAdmin}}/roads/all",
-                  "host": [
-                    "{{baseUrlAdmin}}"
-                  ],
-                  "path": [
-                    "roads",
-                    "all"
-                  ]
-                }
+            "url": {
+              "raw": "{{baseUrl}}/roads",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roads"
+              ]
+            },
+            "description": "Crea una nueva ruta"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Road",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
               },
-              "response": []
-            }
-          ]
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Carrera 7 Modificada\",\n  \"code\": \"CR7\",\n  \"typeRoad\": \"SECUNDARIA\",\n  \"stations\": [\"66a1234567890abcdef12345\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/roads/66a1234567890abcdef12345",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roads",
+                "66a1234567890abcdef12345"
+              ]
+            },
+            "description": "Actualiza una ruta existente"
+          },
+          "response": []
+        },
+        {
+          "name": "Change Road Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"INACTIVO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/roads/66a1234567890abcdef12345/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roads",
+                "66a1234567890abcdef12345",
+                "status"
+              ]
+            },
+            "description": "Cambia el estado de una ruta (ACTIVO/INACTIVO)"
+          },
+          "response": []
         }
-      ],
-      "description": "Microservicio Administrativo para la gestión de estaciones y trayectos (GeoJSON)."
+      ]
     },
     {
-      "name": "3. Server Client (Node.js)",
+      "name": "Stations (Estaciones)",
       "item": [
         {
-          "name": "General",
-          "item": [
-            {
-              "name": "Health check",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseUrlClient}}/health",
-                  "host": [
-                    "{{baseUrlClient}}"
-                  ],
-                  "path": [
-                    "health"
-                  ]
+          "name": "Get All Stations with Pagination",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/stations?page=1&limit=10&status=ACTIVO&typeStation=TERMINAL",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stations"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número de página (default: 1)"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Cantidad de registros por página (default: 10)"
+                },
+                {
+                  "key": "status",
+                  "value": "ACTIVO",
+                  "description": "Filtrar por estado: ACTIVO, INACTIVO",
+                  "disabled": true
+                },
+                {
+                  "key": "typeStation",
+                  "value": "TERMINAL",
+                  "description": "Filtrar por tipo: TERMINAL, PARADA, INTERMEDIA",
+                  "disabled": true
                 }
-              },
-              "response": []
-            }
-          ]
+              ]
+            },
+            "description": "Obtiene todas las estaciones con paginación e filtros opcionales"
+          },
+          "response": []
         },
         {
-          "name": "Billetera (Wallets)",
-          "item": [
-            {
-              "name": "Obtener Balance",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"userId\": \"{{user_id}}\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+          "name": "Get All Stations (No Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/stations/all?status=ACTIVO&typeStation=PARADA",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stations",
+                "all"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "ACTIVO",
+                  "disabled": true
                 },
-                "url": {
-                  "raw": "{{baseUrlClient}}/wallets/balance",
-                  "host": [
-                    "{{baseUrlClient}}"
-                  ],
-                  "path": [
-                    "wallets",
-                    "balance"
-                  ]
+                {
+                  "key": "typeStation",
+                  "value": "PARADA",
+                  "disabled": true
                 }
-              },
-              "response": []
+              ]
             },
-            {
-              "name": "Inicializar Billetera (S2S)",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"UserId\": \"{{user_id}}\",\n  \"CourtesyTrips\": 5,\n  \"Balance\": 0\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlClient}}/wallets/initialize",
-                  "host": [
-                    "{{baseUrlClient}}"
-                  ],
-                  "path": [
-                    "wallets",
-                    "initialize"
-                  ]
-                },
-                "description": "(`/wallets/initialize` y `/wallets/recharge`), **están blindadas y el usuario no tiene acceso a ellas.** Gracias al middleware `verifyInternalSecret` , si un usuario malintencionado intenta enviar una petición HTTP directa a Node.js para agregarse saldo gratis, el servidor la rechazará con un error `403 Forbidden`. La única entidad en todo el ecosistema que conoce la llave `x-internal-secret` y tiene autorización para consumir esas rutas es tu **Auth Server (.NET)**, y solo lo hace después de haber cobrado el dinero exitosamente."
-              },
-              "response": []
-            },
-            {
-              "name": "Acreditar Recarga (S2S)",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"UserId\": \"{{user_id}}\",\n  \"Amount\": 50.00\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlClient}}/wallets/recharge",
-                  "host": [
-                    "{{baseUrlClient}}"
-                  ],
-                  "path": [
-                    "wallets",
-                    "recharge"
-                  ]
-                },
-                "description": "(`/wallets/initialize` y `/wallets/recharge`), **están blindadas y el usuario no tiene acceso a ellas.** Gracias al middleware `verifyInternalSecret` , si un usuario malintencionado intenta enviar una petición HTTP directa a Node.js para agregarse saldo gratis, el servidor la rechazará con un error `403 Forbidden`. La única entidad en todo el ecosistema que conoce la llave `x-internal-secret` y tiene autorización para consumir esas rutas es tu **Auth Server (.NET)**, y solo lo hace después de haber cobrado el dinero exitosamente."
-              },
-              "response": []
-            }
-          ]
+            "description": "Obtiene todas las estaciones sin paginación (útil para dropdowns)"
+          },
+          "response": []
         },
         {
-          "name": "Viajes (Tours)",
-          "item": [
-            {
-              "name": "Planear y Pagar Viaje",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "token",
-                    "value": "{{jwt_token}}",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"userId\": \"{{user_id}}\",\n  \"originLat\": 14.634915,\n  \"originLon\": -90.532818,\n  \"destLat\": 14.610500,\n  \"destLon\": -90.525000\n}"
-                },
-                "url": {
-                  "raw": "{{baseUrlClient}}/tours/plan",
-                  "host": [
-                    "{{baseUrlClient}}"
-                  ],
-                  "path": [
-                    "tours",
-                    "plan"
-                  ]
-                }
+          "name": "Get Station by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/stations/66a1234567890abcdef12345",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stations",
+                "66a1234567890abcdef12345"
+              ]
+            },
+            "description": "Obtiene una estación específica por su ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Station",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
               },
-              "response": []
-            }
-          ]
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Estación Centro\",\n  \"stationCode\": \"EST-001\",\n  \"typeStation\": \"TERMINAL\",\n  \"location\": {\n    \"latitude\": 4.7110,\n    \"longitude\": -74.0721\n  },\n  \"capacity\": 150\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stations"
+              ]
+            },
+            "description": "Crea una nueva estación"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Station",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Estación Centro Actualizada\",\n  \"stationCode\": \"EST-001\",\n  \"typeStation\": \"PARADA\",\n  \"location\": {\n    \"latitude\": 4.7110,\n    \"longitude\": -74.0721\n  },\n  \"capacity\": 200\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stations/66a1234567890abcdef12345",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stations",
+                "66a1234567890abcdef12345"
+              ]
+            },
+            "description": "Actualiza una estación existente"
+          },
+          "response": []
+        },
+        {
+          "name": "Change Station Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"INACTIVO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stations/66a1234567890abcdef12345/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stations",
+                "66a1234567890abcdef12345",
+                "status"
+              ]
+            },
+            "description": "Cambia el estado de una estación (ACTIVO/INACTIVO)"
+          },
+          "response": []
         }
-      ],
-      "description": "Microservicio de Billetera Virtual y Planificación de Rutas para los usuarios."
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
+      ]
     },
     {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
+      "name": "Alerts (Alertas)",
+      "item": [
+        {
+          "name": "Get Active Alerts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/alerts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alerts"
+              ]
+            },
+            "description": "Obtiene todas las alertas activas"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Alert",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Congestión en hora pico\",\n  \"description\": \"Se reporta congestión severa en la Carrera 7 durante la hora pico\",\n  \"type\": \"CONGESTIÓN\",\n  \"severity\": \"ALTA\",\n  \"location\": {\n    \"road\": \"66a1234567890abcdef12345\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alerts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alerts"
+              ]
+            },
+            "description": "Crea una nueva alerta"
+          },
+          "response": []
+        },
+        {
+          "name": "Resolve Alert",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"RESUELTA\",\n  \"resolution\": \"La congestión se despejó después de las 7:00 PM\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alerts/66a1234567890abcdef12345/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alerts",
+                "66a1234567890abcdef12345",
+                "status"
+              ]
+            },
+            "description": "Resuelve una alerta marcándola como resuelta"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Buses",
+      "item": [
+        {
+          "name": "Get All Buses with Pagination",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/buses?page=1&limit=10&serviceType=TRANSMETRO",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "buses"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número de página (default: 1)"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Cantidad de registros por página (default: 10)"
+                },
+                {
+                  "key": "serviceType",
+                  "value": "TRANSMETRO",
+                  "description": "Filtrar por tipo de servicio: TRANSMETRO, TRANSURBANO, TUBUS",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Obtiene todos los buses con paginación e filtro opcional de tipo de servicio"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Bus",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"busCode\": \"TM-101\",\n  \"plateNumber\": \"ABC-123\",\n  \"serviceType\": \"TRANSMETRO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/buses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "buses"
+              ]
+            },
+            "description": "Crea un nuevo bus"
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Route to Bus",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"routeId\": \"66a1234567890abcdef12345\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/buses/66a1234567890abcdef12345/assign-route",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "buses",
+                "66a1234567890abcdef12345",
+                "assign-route"
+              ]
+            },
+            "description": "Asigna una ruta a un bus (deben ser del mismo ServiceType)"
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
     {
-      "key": "baseUrlAuth",
-      "value": "http://localhost:8080"
+      "key": "baseUrl",
+      "value": "http://localhost:3001/TCONECTA/v1",
+      "type": "string",
+      "description": "URL base de la API"
     },
     {
-      "key": "baseUrlAdmin",
-      "value": "http://localhost:3001"
-    },
-    {
-      "key": "baseUrlClient",
-      "value": "http://localhost:3002"
-    },
-    {
-      "key": "jwt_token",
-      "value": ""
-    },
-    {
-      "key": "recovery_token",
-      "value": ""
-    },
-    {
-      "key": "stationCode",
-      "value": ""
-    },
-    {
-      "key": "routeCode",
-      "value": ""
-    },
-    {
-      "key": "user_id",
-      "value": ""
-    },
-    {
-      "key": "alert_id",
-      "value": ""
+      "key": "token",
+      "value": "",
+      "type": "string",
+      "description": "Token JWT obtenido del servidor de autenticación"
     }
-  ]
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  }
 }

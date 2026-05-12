@@ -33,7 +33,7 @@ const stationSchema = new mongoose.Schema(
         location: {
             type: {
                 type: String,
-                enum: ['Point'], 
+                enum: ['Point'],
                 required: true,
                 unique: true,
                 default: 'Point'
@@ -42,7 +42,7 @@ const stationSchema = new mongoose.Schema(
                 type: [Number],
                 required: [true, 'Las coordenadas son obligatorias'],
                 validate: {
-                    validator: function(coordenates) {
+                    validator: function (coordenates) {
                         return coordenates && coordenates.length === 2;
                     },
                     message: 'Las coordenadas deben contener exactamente longitud y latitud'
@@ -56,11 +56,17 @@ const stationSchema = new mongoose.Schema(
         isActive: {
             type: Boolean,
             default: true
+        },
+        serviceType: {
+            type: String,
+            required: [true, 'El tipo de servicio es obligatorio'],
+            enum: ['TRANSMETRO', 'TRANSURBANO', 'TUBUS'],
+            default: 'TRANSMETRO'
         }
     },
     {
         versionKey: false,
-        timestamps: true 
+        timestamps: true
     }
 );
 

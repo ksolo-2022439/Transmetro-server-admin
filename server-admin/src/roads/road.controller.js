@@ -2,15 +2,15 @@
 
 import mongoose from 'mongoose';
 import Road from './road.model.js';
-import Station from '../stations/station.model.js'; 
+import Station from '../stations/station.model.js';
 
-const processStations = async (stationsArray) => {
+const processStations = async (stationsArray, roadServiceType) => {
     if (!stationsArray || !Array.isArray(stationsArray) || stationsArray.length === 0) return [];
-    
-    const processedIds = [];
+
+    const processedIds =[];
     for (const item of stationsArray) {
         if (mongoose.Types.ObjectId.isValid(item)) {
-            processedIds.push(item); // Ya es un ID válido
+            processedIds.push(item);
         } else {
             const station = await Station.findOne({ stationCode: item.toUpperCase() });
             if (station) {
@@ -18,6 +18,16 @@ const processStations = async (stationsArray) => {
             }
         }
     }
+
+    if (roadServiceType) {
+        const stations = await Station.find({ _id: { $in: processedIds } });
+        const invalidStations = stations.filter(st => st.serviceType !== roadServiceType);
+
+        if (invalidStations.length > 0) {
+            throw new Error(`Las siguientes estaciones no pertenecen al servicio ${roadServiceType}: ${invalidStations.map(s => s.stationCode).join(', ')}`);
+        }
+    }
+
     return processedIds;
 };
 
@@ -33,7 +43,7 @@ export const getRoads = async (req, res) => {
         const skip = (parseInt(page) - 1) * parseInt(limit);
 
         const roads = await Road.find(filter)
-            .populate('stations', 'name stationCode typeStation location') 
+            .populate('stations', 'name stationCode typeStation location')
             .limit(parseInt(limit))
             .skip(skip)
             .sort({ createdAt: -1 });
@@ -68,7 +78,7 @@ export const getAllRoads = async (req, res) => {
         const roads = await Road.find(filter)
             .populate('stations', 'name stationCode')
             .sort({ createdAt: -1 });
-            
+
         const total = await Road.countDocuments(filter);
 
         res.status(200).json({
@@ -168,9 +178,9 @@ export const updateRoad = async (req, res) => {
     try {
         const { id } = req.params;
         const { coordinates, stations, ...otherData } = req.body;
-        
+
         const updateData = { ...otherData };
-        
+
         if (coordinates) {
             updateData.path = {
                 type: 'LineString',
@@ -217,7 +227,7 @@ export const updateRoad = async (req, res) => {
 export const changeRoadStatus = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status } = req.body; 
+        const { status } = req.body;
 
         if (!['ACTIVE', 'INACTIVE', 'MAINTENANCE', 'CLOSED'].includes(status.toUpperCase())) {
             return res.status(400).json({
@@ -249,7 +259,7 @@ export const changeRoadStatus = async (req, res) => {
             message: `El estado de la ruta cambió a ${status.toUpperCase()} exitosamente`,
             data: road
         });
-        
+
     } catch (error) {
         res.status(500).json({
             success: false,

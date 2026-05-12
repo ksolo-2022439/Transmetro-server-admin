@@ -31,48 +31,43 @@ const options = {
                     description: 'JWT Bearer token required for authentication'
                 }
             },
-            schemas: {
+            schemas: {   
+                Bus: {
+                    type: 'object',
+                    properties: {
+                        _id: { type: 'string' },
+                        busCode: { type: 'string', description: 'Código único del bus (ej. TM-100)' },
+                        plateNumber: { type: 'string', description: 'Placa vehicular' },
+                        serviceType: { 
+                            type: 'string', 
+                            enum:['TRANSMETRO', 'TRANSURBANO', 'TUBUS'],
+                            description: 'A qué sistema pertenece el bus'
+                        },
+                        assignedRoute: { type: 'string', description: 'ID de la ruta asignada actualmente' },
+                        status: {
+                            type: 'string',
+                            enum: ['ACTIVE', 'INACTIVE', 'MAINTENANCE']
+                        },
+                        createdAt: { type: 'string', format: 'date-time' }
+                    }
+                },
                 Road: {
                     type: 'object',
                     properties: {
-                        _id: {
-                            type: 'string',
-                            description: 'Unique identifier for the road'
-                        },
-                        name: {
-                            type: 'string',
-                            description: 'Name of the road'
-                        },
-                        code: {
-                            type: 'string',
-                            description: 'Code identifier for the road'
-                        },
-                        typeRoad: {
-                            type: 'string',
-                            enum: ['PRINCIPAL', 'SECUNDARIA', 'AUXILIAR'],
-                            description: 'Type of road'
-                        },
-                        status: {
-                            type: 'string',
-                            enum: ['ACTIVO', 'INACTIVO'],
-                            description: 'Status of the road'
-                        },
-                        stations: {
-                            type: 'array',
-                            items: {
-                                type: 'string'
-                            },
-                            description: 'Array of station IDs'
-                        },
-                        createdAt: {
-                            type: 'string',
-                            format: 'date-time',
-                            description: 'Creation timestamp'
-                        },
-                        updatedAt: {
-                            type: 'string',
-                            format: 'date-time',
-                            description: 'Last update timestamp'
+                        // ... (propiedades de Road que ya tenías)
+                        serviceType: { 
+                            type: 'string', 
+                            enum:['TRANSMETRO', 'TRANSURBANO', 'TUBUS']
+                        }
+                    }
+                },
+                Station: {
+                    type: 'object',
+                    properties: {
+                        // ... (propiedades de Station que ya tenías)
+                        serviceType: { 
+                            type: 'string', 
+                            enum:['TRANSMETRO', 'TRANSURBANO', 'TUBUS']
                         }
                     }
                 },
@@ -208,6 +203,7 @@ const options = {
         './src/roads/road.routes.js',
         './src/stations/station.routes.js',
         './src/alerts/alert.routes.js',
+        './src/buses/bus.routes.js', 
         './configs/app.js'
     ]
 };
