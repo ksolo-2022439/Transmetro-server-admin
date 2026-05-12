@@ -16,6 +16,11 @@ export const validateCreateRoad = [
   body("typeRoad")
     .isIn(["EXPRESS", "RELEVOS", "CENTRALES"])
     .withMessage("El tipo de ruta debe ser EXPRESS, RELEVOS o CENTRALES"),
+  body("serviceType")
+    .notEmpty()
+    .withMessage("El tipo de servicio es obligatorio")
+    .isIn(["TRANSMETRO", "TRANSURBANO", "TUBUS"])
+    .withMessage("El tipo de servicio debe ser TRANSMETRO, TRANSURBANO o TUBUS"),
   body("stations")
     .optional()
     .isArray()
@@ -51,6 +56,10 @@ export const validateUpdateRoad = [
     .optional()
     .isIn(["EXPRESS", "RELEVOS", "CENTRALES"])
     .withMessage("El tipo de ruta debe ser EXPRESS, RELEVOS o CENTRALES"),
+  body("serviceType")
+    .optional()
+    .isIn(["TRANSMETRO", "TRANSURBANO", "TUBUS"])
+    .withMessage("El tipo de servicio debe ser TRANSMETRO, TRANSURBANO o TUBUS"),
   body("stations")
     .optional()
     .isArray()

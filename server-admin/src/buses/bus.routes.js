@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getBuses, createBus, assignRouteToBus } from './bus.controller.js';
 import { validateJWT } from "../../middlewares/auth-validators.js";
+import { validateCreateBus, validateAssignRouteToBus } from '../../middlewares/buses-validators.js';
 
 const router = Router();
 /**

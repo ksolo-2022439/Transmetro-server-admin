@@ -134,13 +134,14 @@ export const getRoadById = async (req, res) => {
 // 4. Crear una nueva ruta
 export const createRoad = async (req, res) => {
     try {
-        const { name, routeCode, typeRoad, stations, coordinates } = req.body;
-        const finalStations = await processStations(stations);
+        const { name, routeCode, typeRoad, serviceType, stations, coordinates } = req.body;
+        const finalStations = await processStations(stations, serviceType);
 
         const roadData = {
             name,
             routeCode,
             typeRoad,
+            serviceType,
             stations: finalStations,
             path: {
                 type: 'LineString',
@@ -177,10 +178,14 @@ export const createRoad = async (req, res) => {
 export const updateRoad = async (req, res) => {
     try {
         const { id } = req.params;
-        const { coordinates, stations, ...otherData } = req.body;
+        const { coordinates, stations, serviceType, ...otherData } = req.body;
 
         const updateData = { ...otherData };
 
+        if (serviceType) {
+            updateData.serviceType = serviceType.toUpperCase();
+        }
+        
         if (coordinates) {
             updateData.path = {
                 type: 'LineString',
@@ -189,7 +194,7 @@ export const updateRoad = async (req, res) => {
         }
 
         if (stations !== undefined) {
-            updateData.stations = await processStations(stations);
+            updateData.stations = await processStations(stations, serviceType);
         }
 
         let query = { _id: id };

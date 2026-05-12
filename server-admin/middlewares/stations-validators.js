@@ -16,6 +16,11 @@ export const validateCreateStation = [
     body('typeStation')
         .isIn(['CENTRALES', 'CARRIL LATERAL', 'TRASBORDO', 'TERMINALES'])
         .withMessage('El tipo de estación debe ser CENTRALES, CARRIL LATERAL, TRASBORDO o TERMINALES'),
+    body("serviceType")
+    .notEmpty()
+    .withMessage("El tipo de servicio es obligatorio")
+    .isIn(["TRANSMETRO", "TRANSURBANO", "TUBUS"])
+    .withMessage("El tipo de servicio debe ser TRANSMETRO, TRANSURBANO o TUBUS"),
     body('coordinates')
         .isArray({ min: 2, max: 2 })
         .withMessage('Las coordenadas deben ser un arreglo de exactamente 2 números [longitud, latitud]'),
@@ -38,6 +43,11 @@ export const validateUpdateStation = [
         .optional()
         .isIn(['CENTRALES', 'CARRIL LATERAL', 'TRASBORDO', 'TERMINALES'])
         .withMessage('El tipo de estación debe ser CENTRALES, CARRIL LATERAL, TRASBORDO o TERMINALES'),
+    body("serviceType")
+    .notEmpty()
+    .withMessage("El tipo de servicio es obligatorio")
+    .isIn(["TRANSMETRO", "TRANSURBANO", "TUBUS"])
+    .withMessage("El tipo de servicio debe ser TRANSMETRO, TRANSURBANO o TUBUS"),
     body('coordinates')
         .optional()
         .isArray({ min: 2, max: 2 })
